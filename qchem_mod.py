@@ -165,6 +165,8 @@ class QChem(FileIOCalculator):
                     raise SCFError()
                 elif ' Total energy in the final basis set =' in line:
                     self.results['energy'] = float(line.split()[8]) * e_conv
+                elif ' Total energy =' in line:
+                    self.results['energy'] = float(line.split()[3]) * e_conv
                 elif ' E(NEO-SCF) =' in line:
                     # Adjust the energy from the NEO-SCF calculation
                     self.results['energy'] = float(line.split("=")[1]) * e_conv
