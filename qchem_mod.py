@@ -1,7 +1,7 @@
+import ase.units
 import numpy as np
 from ase.calculators.calculator import FileIOCalculator
 from ase.calculators.calculator import SCFError
-import ase.units
 
 
 def make_neo_basis(neo_basis, neo_idx, neo_exp, atoms):
@@ -25,9 +25,11 @@ def make_neo_basis(neo_basis, neo_idx, neo_exp, atoms):
     neo_basis_list = neo_basis.split("_")
     ele = atoms.get_chemical_symbols()
     out_str = "$neo_basis \n"
+    # Loop over the indices
     for idx in neo_idx:
         # write the atom name and index
         out_str += ele[idx] + " " + str(idx + 1) + "\n"
+        # Loop over the exponents
         for i in range(len(neo_basis_list)):
             for j in range(int(neo_basis_list[i][0])):
                 out_str += neo_basis_list[i][-1].upper() + " 1 1.0\n"
@@ -102,6 +104,7 @@ def make_neo_basis_presets(neo_basis_name, neo_idx, atoms):
         out_str += ele[idx] + " " + str(idx + 1) + "\n"
         # Get the exponents
         iter_exp = iter(neo_basis_terms_dict[neo_basis_name])
+        # Loop over the terms
         for i in range(len(neo_basis_list)):
             for j in range(int(neo_basis_list[i][0])):
                 out_str += neo_basis_list[i][-1].upper() + " 1 1.0\n"
@@ -162,6 +165,18 @@ class QChem(FileIOCalculator):
         ecpfile: str
             path to file containing the effective core potential. Use in
             combination with ecp='gen' keyword argument.
+        atoms: ase.Atoms
+            atoms object to be used for the calculation
+        neo_idx: list
+            list of indices of atoms for which to apply the neo basis
+        neo_exp: list
+            list of exponents for the neo basis
+        neo_basis: str
+            string defining the neo basis
+        neo_preset: str
+            string defining the neo basis preset
+        solv_extra: str
+            extra string to be added to the solvent block
         """
 
         FileIOCalculator.__init__(self, restart, ignore_bad_restart_file,
