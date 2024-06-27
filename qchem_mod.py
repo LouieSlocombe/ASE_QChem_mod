@@ -196,12 +196,12 @@ class QChem(FileIOCalculator):
         else:
             self.command = 'qchem '
         if n_p != 1:
-            self.command += '-np %d ' % n_p
+            self.command += f'-np {n_p} '
         if n_t != 1:
-            self.command += '-nt %d ' % n_t
+            self.command += f'-nt {n_t} '
         self.command += 'PREFIX.inp PREFIX.out'
         if scratch is not None:
-            self.command += ' %s' % scratch
+            self.command += f' {scratch}'
 
         # # Redirect output to PREFIX.log
         self.command += " >> PREFIX.log"
