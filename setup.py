@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='qchem_mod',
+    name='ASE_QChem_mod',
     version='0.1.0',
     author='Louie Slocombe',
     author_email='louies@hotmail.co.uk',
